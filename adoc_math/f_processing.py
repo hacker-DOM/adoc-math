@@ -26,7 +26,7 @@ class Processing(e_svg_handling.SvgHandling):
             closing_tag_linenum = cell.linenum
         else:
             raise AdocMathException(DEAD_CODE_MSG)
-        lines_inserted = s.file_2_lines_inserted[file_path]
+        lines_inserted = s.file_2_lines_inserted[cell.path]
         s.comment_out(
             file_contents=s.file_contents_proposed[cell.path],
             linenums=range(
@@ -54,7 +54,7 @@ class Processing(e_svg_handling.SvgHandling):
             closing_tag_linenum + lines_inserted,
             LineInFile(macro),
         )
-        s.file_2_lines_inserted[file_path] = LinesInserted(lines_inserted + 1)
+        s.file_2_lines_inserted[cell.path] = LinesInserted(lines_inserted + 1)
         # endregion
 
     def get_file_name(

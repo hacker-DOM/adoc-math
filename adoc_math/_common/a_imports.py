@@ -30,3 +30,4 @@ import inspect
 import pprint
 import xml.dom.minidom
 import random
+import contextlib

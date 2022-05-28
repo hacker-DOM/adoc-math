@@ -87,3 +87,16 @@ def join_with(
     """Reverses the arguments of x.join(y)"""
 
     return joiner.join(it)
+
+
+@contextlib.contextmanager
+def change_cwd(path: Union[plib.Path, str]):
+    """
+    Temporary change the current working directory to the path provided as the first argument.
+    """
+    orig_cwd = plib.Path.cwd().resolve()
+    try:
+        os.chdir(plib.Path(path).resolve())
+        yield
+    finally:
+        os.chdir(orig_cwd)

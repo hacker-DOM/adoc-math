@@ -1,0 +1,16 @@
+# generated on execution
+__pycache__
+
+# generated on `npm link mathjax@3`
+node_modules
+package.json
+package-lock.json
+
+# generated on `pip install -e .`
+*.egg-info/
+
+# generated on `python3 setup.py build`
+build/
+
+# generated on `pyenv local 3.8.12`
+.python-version

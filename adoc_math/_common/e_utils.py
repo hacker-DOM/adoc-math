@@ -21,7 +21,7 @@ def run_cmd(
     stdin=bytes(),
     raise_on_error=True,
 ) -> Tuple[StdOut, StdErr]:
-    print(f"Running {cmd}...")
+    logger.info(f"Running {cmd}...")
     process = subprocess.Popen(
         cmd,
         stdout=subprocess.PIPE,

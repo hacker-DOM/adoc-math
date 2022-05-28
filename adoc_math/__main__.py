@@ -75,8 +75,6 @@ def parse_args():
 def main():
     args = parse_args()
 
-    print(args)
-
     # The idea here is that the arguments specified in `parse_args` will have value
     # None if they are not specified by the user. If we just use something like `i_impl.AdocMath(default_alignment=args.default_alignment`
     # etc (for all other arguments), then we'll lose the default values

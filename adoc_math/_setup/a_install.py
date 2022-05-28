@@ -2,7 +2,7 @@ from .._common import *
 
 
 class Install:
-    def run():
+    def run(s):
         run_cmd(
             cmd=Command("npm i -g mathjax@3"),
         )

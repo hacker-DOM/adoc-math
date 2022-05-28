@@ -2,7 +2,7 @@ from .._common import *
 
 
 class Link:
-    def run():
+    def run(s):
         run_cmd(cmd=Command("npm link mathjax@3"))
 
 

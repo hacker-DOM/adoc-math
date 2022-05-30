@@ -62,7 +62,7 @@ def parse_args():
     p.add_argument(
         "--default-alignment",
         help="This option controls the default *horizontal* alignment of *block* cells. In particuar, it uses Asciidoc's image:...[align=(left|center|right)] API. Default: center.",
-        choies=("left", "center", "right"),
+        choices=("left", "center", "right"),
     )
 
     p.add_argument(

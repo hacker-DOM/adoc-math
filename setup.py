@@ -1,3 +1,4 @@
+from gzip import READ
 import setuptools
 
 LICENSE = "ISC"
@@ -8,7 +9,6 @@ SETUP_DIR = "_setup"
 README = "README.adoc"
 AUTHOR = "Dominik Teiml"
 PYTHON_REQUIRES = ">=3.7"
-INCLUDE_PACKAGE_DATA = True
 HOMEPAGE = "https://github.com/hacker-dom/adoc-math"
 DESCRIPTION = """Use MathJax (Latex or AsciiMath) in your AsciiDoc projects!"""
 # text/asciidoc is not supported
@@ -27,12 +27,10 @@ packages = [
     if "tests" not in some_dir.split(".")
 ] + [DIR]
 
-package_data = dict(
-    NAME=[
-        f"./{DIR}/**/*.py",
-        f"./{DIR}/**/*.js",
-    ]
-)
+data_files = [
+    ("", [README]),
+    (DIR, [f"{DIR}/d_mathjax_wrapper.js"]),
+]
 
 entry_points = dict(
     console_scripts=[
@@ -53,12 +51,11 @@ setuptools.setup(
     license=LICENSE,
     packages=packages,
     homepage=HOMEPAGE,
+    data_files=data_files,
     description=DESCRIPTION,
     entry_points=entry_points,
-    package_data=package_data,
     extras_require=extras_require,
     python_requires=PYTHON_REQUIRES,
     long_description=long_description,
-    include_package_data=INCLUDE_PACKAGE_DATA,
     long_description_content_type=LONG_DESCRIPTION_CONTENT_TYPE,
 )

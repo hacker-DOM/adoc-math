@@ -22,7 +22,7 @@ Use MathJax (Latex or AsciiMath) in your AsciiDoc projects 🤟🚀
 
 toc::[]
 
-## {example}
+## 📝 {example}
 
 ## 📝 Installation
 
@@ -50,9 +50,9 @@ and many other formats! There is even an {adoctorjs} version (an automated trans
 ### 🔍 LaTeX
 Putting LaTeX equations in other places than a TeX document is not so easy. There are two main libraries for this:
 
-* :mathjax:
+* {mathjax}
 ** It uses native browser fonts and a lot of Css to replicate {latex} in the browser.
-* :katex:
+* {katex}
 ** Similar to {mathjax}, built by Khan Academy.
 
 ### 🔍 STEM

@@ -141,6 +141,6 @@ MathJax probably cannot be found. Try running `adoc-math-setup`.
 
 > My AsciiMath fractions are too large!
 
-It seems that {amath} interprets fractions in `displaystyle` rather than `textstyle` (`\dfrac{}{}` rather than `\tfrac{}{} or even `\frac{}{}`, see https://tex.stackexchange.com/a/135395/31626[StackExchange]).
+It seems that {amath} interprets fractions in `displaystyle` rather than `textstyle` (`\dfrac{}{}` rather than `\tfrac{}{}` or even `\frac{}{}`, see https://tex.stackexchange.com/a/135395/31626[StackExchange]).
 
 I haven't found a good solution to this yet. If you have any ideas, please let me know! Note that if you have a singleton fraction (`$a/b$ amath`) you can scale it down with `$a/b$ amath, scale = 60%` (or just use `tex`).

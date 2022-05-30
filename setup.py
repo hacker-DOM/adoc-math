@@ -9,6 +9,7 @@ SETUP_DIR = "_setup"
 README = "README.adoc"
 AUTHOR = "Dominik Teiml"
 PYTHON_REQUIRES = ">=3.7"
+INCLUDE_PACKAGE_DATA = True
 HOMEPAGE = "https://github.com/hacker-dom/adoc-math"
 DESCRIPTION = """Use MathJax (Latex or AsciiMath) in your AsciiDoc projects!"""
 # text/asciidoc is not supported
@@ -32,6 +33,8 @@ data_files = [
     (DIR, [f"{DIR}/d_mathjax_wrapper.js"]),
 ]
 
+package_data = dict(DIR=["*.js"], NAME=["*.js"])
+
 entry_points = dict(
     console_scripts=[
         f"{NAME} = {DIR}.__main__:main",
@@ -54,8 +57,10 @@ setuptools.setup(
     data_files=data_files,
     description=DESCRIPTION,
     entry_points=entry_points,
+    package_data=package_data,
     extras_require=extras_require,
     python_requires=PYTHON_REQUIRES,
     long_description=long_description,
+    include_package_data=INCLUDE_PACKAGE_DATA,
     long_description_content_type=LONG_DESCRIPTION_CONTENT_TYPE,
 )

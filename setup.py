@@ -30,7 +30,7 @@ packages = [
 
 data_files = [
     ("", [README]),
-    (DIR, ["d_mathjax_wrapper.js"]),
+    (DIR, [f"{DIR}/d_mathjax_wrapper.js"]),
 ]
 
 package_data = dict(DIR=["*.js"], NAME=["*.js"])

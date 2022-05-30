@@ -1,0 +1,2 @@
+include ./README.adoc
+include ./adoc_math/d_mathjax_wrapper.js

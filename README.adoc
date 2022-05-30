@@ -24,7 +24,7 @@ toc::[]
 
 ## {example}
 
-## Installation
+## 📝 Installation
 
 adoc-math has zero depependencies! So it's fine to install it globallyfootnote:[Theoretically, the only time this could cause issues is if you have another package which has the name adoc-math (it obviously has to have a different PyPI name, because adoc-math is already taken 😛. But this is not very likely.. )] 😛
 
@@ -34,9 +34,9 @@ pip3 install --user --upgrade adoc-math
 adoc-math-setup # will call `npm i -g mathjax@3` and `npm link`
 ----
 
-## Overview
+## 📝 Overview
 
-### Background
+### 🔍 Background
 
 I think of {adoc} as a markup syntax somewhere between {markdown} and {latex}. It originated with a https://github.com/asciidoc-py/asciidoc-py[Python implementation], but afaik that isn't actively developed, and the reference implementation is {adoctor} in Ruby.
 
@@ -47,7 +47,7 @@ I think of {adoc} as a markup syntax somewhere between {markdown} and {latex}. I
 
 and many other formats! There is even an {adoctorjs} version (an automated translation of the Ruby code to JavaScript).
 
-### LaTeX
+### 🔍 LaTeX
 Putting LaTeX equations in other places than a TeX document is not so easy. There are two main libraries for this:
 
 * :mathjax:
@@ -55,7 +55,7 @@ Putting LaTeX equations in other places than a TeX document is not so easy. Ther
 * :katex:
 ** Similar to {mathjax}, built by Khan Academy.
 
-### STEM
+### 🔍 STEM
 STEM stands for Science, Technology, Engineering, Mathematics, basicaly {latex}. There are two sections in the {adoc} documentation on STEM:
 
 * {adoc-stem}
@@ -68,7 +68,7 @@ TLDR:
 ** Some more references:
 *** https://github.com/asciidoctor/asciidoctor-mathematical/issues/45
 
-### Architecture
+### 🔍 Architecture
 
 That's where `adoc-math` comes in! I decided for:
 
@@ -78,7 +78,7 @@ I couldn't use {katex} because only {mathjax} has an Svg output (see https://git
 
 Unfortunately, {mathjax} 3 doesn't come with a Node CLI package like https://github.com/mathjax/mathjax-node-cli/[MathJax 2]. So I implemented xref:./adoc_math/d_mathjax_wrapper.js[a wrapper] over the library.
 
-### Usage
+### 🔍 Usage
 
 [cols="2*"]
 |===
@@ -100,7 +100,7 @@ $$
 For more examples, see the {example}.
 
 
-## FAQ
+## 📝 FAQ
 
 > Why isn't `adoc-math` written in Ruby?
 
@@ -134,7 +134,7 @@ This first version is geared towards Pdf output. Happy to add more powerful supp
 
 The created svgs have a property called `stroke-width` that can adjust this. Unfortunately, it is currently set to 0, so it is not possible to make it thinner. In theory it should be possible to make it *thicker* by increasing that value. xref:./adoc_math/e_svg_transforming.py[svg_transforming.py] would be the place for that; or create an issue and I'll add it.
 
-## Debugging
+## 📝 Debugging
 
 > I get a MODULE_NOT_FOUND error.
 

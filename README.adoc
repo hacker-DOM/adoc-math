@@ -1,1 +1,146 @@
+// Header
 # adoc-math
+:toc: macro
+
+// Links
+:example: https://github.com/hacker-dom/adoc-math/raw/main/example/adoc-math-example.pdf[Example]
+:adoc: https://docs.asciidoctor.org/asciidoc/latest[AsciiDoc]
+:markdown: https://daringfireball.net/projects/markdown/[Markdown]
+:latex: https://www.latex-project.org[LaTeX]
+:adoctor: https://github.com/asciidoctor/asciidoctor[Asciidoctor]
+:adoctor-pdf: https://github.com/asciidoctor/asciidoctor-pdf[Asciidoctor-Pdf]
+:adoctorjs: https://github.com/asciidoctor/asciidoctor.js[Asciidoctor.js]
+:adoc-stem: https://docs.asciidoctor.org/asciidoc/latest/stem/[AsciiDoc STEM]
+:adoctor-pdf-stem: https://docs.asciidoctor.org/pdf-converter/latest/stem[Asciidoctor-Pdf STEM]
+:mathjax: https://github.com/mathjax/MathJax-src[MathJax]
+:katex: https://github.com/KaTeX/KaTeX[KaTeX]
+:adoc-math: https://github.com/hacker-dom/adoc-math[adoc-math]
+:adoctor-math: https://github.com/asciidoctor/asciidoctor-mathematical[asciidoctor-mathematical]
+:amath: http://asciimath.org[AsciiMath]
+
+
+toc::[]
+
+## {example}
+
+## Installation
+
+adoc-math has zero depependencies! So it's fine to install it globallyfootnote:[Theoretically, the only time this could cause issues is if you have another package which has the name adoc-math (it obviously has to have a different PyPI name, because adoc-math is already taken 😛. But this is not very likely.. )] 😛
+
+[source,bash]
+----
+pip3 install --user --upgrade adoc-math
+adoc-math-setup # will call `npm i -g mathjax@3` and `npm link`
+----
+
+## Overview
+
+### Background
+
+I think of {adoc} as a markup syntax somewhere between {markdown} and {latex}. It originated with a https://github.com/asciidoc-py/asciidoc-py[Python implementation], but afaik that isn't actively developed, and the reference implementation is {adoctor} in Ruby.
+
+{adoc} allows you to write a document and then output it in:
+
+* html ({adoctor})
+* pdf ({adoctor-pdf})
+
+and many other formats! There is even an {adoctorjs} version (an automated translation of the Ruby code to JavaScript).
+
+### LaTeX
+Putting LaTeX equations in other places than a TeX document is not so easy. There are two main libraries for this:
+
+* :mathjax:
+** It uses native browser fonts and a lot of Css to replicate {latex} in the browser.
+* :katex:
+** Similar to {mathjax}, built by Khan Academy.
+
+### STEM
+STEM stands for Science, Technology, Engineering, Mathematics, basicaly {latex}. There are two sections in the {adoc} documentation on STEM:
+
+* {adoc-stem}
+* {adoctor-pdf-stem}
+
+TLDR:
+
+* In {adoctor} (i.e. Html output), you can include math with `stem:[x+y]`. In the browser, {mathjax} is used to render the math, and frankly, it looks beautiful.
+* Since {mathjax} uses browser fonts and Css, it doesn't work in Pdfs. There is an official {adoctor-math} package that provides this support. However, it is extremely quirky, and the ouput doesn't look very good (see a comparison of {adoc-math} and {adoctor-math} in the {example})
+** Some more references:
+*** https://github.com/asciidoctor/asciidoctor-mathematical/issues/45
+
+### Architecture
+
+That's where `adoc-math` comes in! I decided for:
+
+* a Python package that searches for naturally-looking latex cells (e.g. `$a+b$`), calls {mathjax} to create an svg, and replaces the cells with an image of the svg
+
+I couldn't use {katex} because only {mathjax} has an Svg output (see https://github.com/KaTeX/KaTeX/issues/375).
+
+Unfortunately, {mathjax} 3 doesn't come with a Node CLI package like https://github.com/mathjax/mathjax-node-cli/[MathJax 2]. So I implemented xref:./adoc_math/d_mathjax_wrapper.js[a wrapper] over the library.
+
+### Usage
+
+[cols="2*"]
+|===
+| Inline cells:
+a|
+----
+$x + y$ [...options]
+----
+
+| Block cells:
+a|
+----
+$$ [...options]
+x + y
+$$
+----
+|===
+
+For more examples, see the {example}.
+
+
+## FAQ
+
+> Why isn't `adoc-math` written in Ruby?
+
+I don't speak Ruby 😞 If you would like to translate this library to Ruby, or at least an AsciiDoc macro that can get replaced by an image, so we cant get rid of the extra metacompilation step, I'd be more than happy to help!
+
+> What about Windows?
+
+I tried to be conscious of non-Posix platforms, but haven't tested in on Windows. Any behavioral discrepancies would be considered valid issues.
+
+> Can I reference a cell, or add a caption to a block cell?
+
+Yes! Check out the {example}.
+
+> It's annoying having to uncomment the source math to edit it.
+
+You can use a `pre-post` pattern. `pre.adoc` will be your source code, and `post.adoc` will be the output of `adoc-math` / input to `asciidoctor(-pdf)?`. Run `cpy pre.adoc post.adoc` before every invocation to `adoc-math`.
+
+> How come inline cells become part of the sentence when they are on a separate line?
+
+In {adoc}, you need to separate two blocks with at least one _empty_ line. 🙂
+
+> Does `adoc-math` work with an Html output?
+
+This first version is geared towards Pdf output. Happy to add more powerful support for Html outputs in the future (e.g., just use the native `stem:[]` macro for Html, so we can use basic {mathjax} with browser fonts and Css (instead of svgs)).
+
+> Can I use a different font?
+
+{mathjax} currently http://docs.mathjax.org/en/v3.2-latest/output/fonts.html[doesn't provide support for multiple fonts].
+
+> Can I make my math thinner/thicker?
+
+The created svgs have a property called `stroke-width` that can adjust this. Unfortunately, it is currently set to 0, so it is not possible to make it thinner. In theory it should be possible to make it *thicker* by increasing that value. xref:./adoc_math/e_svg_transforming.py[svg_transforming.py] would be the place for that; or create an issue and I'll add it.
+
+## Debugging
+
+> I get a MODULE_NOT_FOUND error.
+
+MathJax probably cannot be found. Try running `adoc-math-setup`.
+
+> My AsciiMath fractions are too large!
+
+It seems that {amath} interprets fractions in `displaystyle` rather than `textstyle` (`\dfrac{}{}` rather than `\tfrac{}{} or even `\frac{}{}`, see https://tex.stackexchange.com/a/135395/31626[StackExchange]).
+
+I haven't found a good solution to this yet. If you have any ideas, please let me know! Note that if you have a singleton fraction (`$a/b$ amath`) you can scale it down with `$a/b$ amath, scale = 60%` (or just use `tex`).

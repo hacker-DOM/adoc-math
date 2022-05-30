@@ -12,5 +12,8 @@ package-lock.json
 # generated on `python3 setup.py build`
 build/
 
+# generated on `python3 -m build`
+dist/
+
 # generated on `pyenv local 3.8.12`
 .python-version

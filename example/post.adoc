@@ -1,0 +1,203 @@
+// Header
+# Example
+:pdf-page-size: 9in x 17in
+:pdf-theme: pdf-theme.yml
+:stem:
+
+// Links
+:adoc-math: https://github.com/hacker-dom/adoc-math[adoc-math]
+:adoctor-math: https://github.com/asciidoctor/asciidoctor-mathematical[asciidoctor-mathematical]
+:amath: http://asciimath.org[AsciiMath]
+:latex: https://www.latex-project.org[LaTeX]
+
+The purpose of this example is to compare {adoc-math} and {adoctor-math}, and to show example of its usage.
+
+
+## `adoc-math` vs `asciidoctor-mathematical`
+
+### `adoc-math`
+
+We are about to discuss the <<cauchy-schwarz-ineq>>.
+
+*Theorem {counter:counter-thms} (Cauchy-Schwarz Inequality)* Let
+// $n$ vertical_align_offset = -0.4ex
+image:imgs/adoc-math/a_inline_amath_n_f5d15920.svg[]
+be a non-negative integer, and let
+// $a_0, a_1, ..., a_n,$ vertical_align_offset = -0.7ex
+image:imgs/adoc-math/a_inline_amath_a_0a_7458f93c.svg[]
+// $b_0, b_1, ..., b_n in bbb "R"$ 
+image:imgs/adoc-math/a_inline_amath_b_0b_986ceb00.svg[]
+where
+// $bbb "R"$
+image:imgs/adoc-math/a_inline_amath_bbbR_34f68880.svg[]
+is the set of real numbers. It follows that:
+
+[#cauchy-schwarz-ineq]
+.Cauchy-Schwarz Inequality
+// $$
+// (a_0^2 + a_1^2 + ... + a_n^2)(b_0^2 + b_1^2 + ... + b_n^2) ≥ (a_0b_0 + a_1b_1 + ... + a_nb_n)^2
+// $$
+image::imgs/adoc-math/b_block_amath_(a_0_6354bc50.svg[align=center]
+
+### `asciidoctor-mathematical`
+
+*Theorem {counter:counter-thms-2} (Cauchy-Schwarz Inequality)* Let stem:[n] be a non-negative integer, and let stem:[a_0, a_1, ..., a_n, b_0, b_1, ..., b_n in R] where stem:[R] is the set of real numbers. It follows that
+
+[#cauchy-schwarz-ineq-2]
+.Cauchy-Schwarz Inequality
+stem:[(a_0^2 + a_1^2 + ... + a_n^2)(b_0^2 + b_1^2 + ... + b_n^2) ≥ (a_0b_0 + a_1b_1 + ... + a_nb_n)^2]
+
+## Examples
+
+// ^ aligns text to center horizontally (left-2-right),
+// .^ aligns text to center vertically (top-2-bottom)
+// No that when a cell cotnains AsciiDoc style (which allows)
+// block elements inside, horizontal alignment is ignored
+// Ref: https://docs.asciidoctor.org/asciidoc/latest/tables/format-cell-content/#cell-styles-and-their-operators
+:space:     
+[cols="  ^.^40,  ^.^15,  .^45  ",stripes=even]
+|===
+| input | output | notes
+
+// Row
+a|
+// {empty} is placeholder so that the content isn't parsed and replaced by adoc math 🙂
+// Ref: https://docs.asciidoctor.org/asciidoc/latest/attributes/character-replacement-ref/
+// We need `subs="+attributes"` so it doesn't get rendered. 🙁
+// Ref: https://docs.asciidoctor.org/asciidoc/latest/pass/pass-macro/#nesting-blocks-and-passthroughs
+[subs="+attributes"]
+----
+{empty}$a/b$
+----
+a|
+[.text-center]
+// $a/b$
+image:imgs/adoc-math/a_inline_amath_ab_dd460eca.svg[]
+a| 
+* The default language is {amath}.
+* Inline cells start with a `$`, and end with a `$`.
+
+// Row
+a|
+[subs="+attributes"]
+----
+{empty}$a/b$ amath
+----
+a|
+[.text-center]
+// $a/b$ amath
+image:imgs/adoc-math/a_inline_amath_ab_bbcbf77a.svg[]
+.2+a|
+* Options come after the last `$` in inline cells.
+* You can override the default language with
+** `amath` ({amath}), or
+** `tex` ({latex})
+// This empty line is significant, it moves the paragraph to its *first* ancestor
+// Ref: https://docs.asciidoctor.org/asciidoc/latest/lists/continuation/#ancestor-list-continuation
+
++ 
+options
+
+// Row
+a|
+[subs="+attributes"]
+----
+{empty}$\dfrac{a}{b}$ tex
+----
+a|
+[.text-center]
+// $\dfrac{a}{b}$ tex
+image:imgs/adoc-math/a_inline_tex_dfra_c0bb0f86.svg[]
+
+// Row
+a|
+[subs="+attributes"]
+----
+{empty}$a/b$ scale = 150%
+----
+a|
+[.text-center]
+// $a/b$ scale = 150%
+image:imgs/adoc-math/a_inline_amath_ab_3888804f.svg[]
+a|
+* You can scale your math.
+
+// Row
+a|
+[subs="+attributes"]
+----
+{empty}$a/b$ vertical_align_offset = 1ex
+----
+a|
+[.text-center]
+// $a/b$ vertical_align_offset = 1ex
+image:imgs/adoc-math/a_inline_amath_ab_db32d819.svg[]
+a|
+* You can move your math up or down.
+
+// Row
+a|
+[subs="+attributes"]
+----
+{empty}$$ amath
+sum_(i=1)^n i^3=((n(n+1))/2)^2
+{empty}$$
+----
+a|
+// $$ amath
+// sum_(i=1)^n i^3=((n(n+1))/2)^2
+// $$
+image::imgs/adoc-math/b_block_amath_sum__57ebec07.svg[align=center]
+a|
+* Block cells are written between lines of `$$`; the options will be on the first line.
+
+// Row
+a| 
+[subs="+attributes"]
+----
+{empty}$$ amath, right
+a^2 + b^2 = c^2
+{empty}$$
+----
+a|
+// $$ amath, right
+// a^2 + b^2 = c^2
+// $$
+image::imgs/adoc-math/b_block_amath_a2+b_c62fc84c.svg[align=right]
+a|
+* You can horizontally align block cells.
+
+// Row
+a|
+[subs="+attributes"]
+----
+{empty}$$ amath, max_lines = 8
+1 +
+2 +
+3 +
+4 +
+5 +
+6 =
+21
+{empty}$$
+----
+a|
+// $$ amath, max_lines = 8
+// 1 +
+// 2 +
+// 3 +
+// 4 +
+// 5 +
+// 6 =
+// 21
+// $$
+image::imgs/adoc-math/b_block_amath_1+2+_9f90f2f1.svg[align=center]
+a|
+* If you forget to close a cell, it can be difficult to find the culprit. To prevent this, block cells have a `max_lines` parameter (by default 6). You can override this with `max_lines=X`.
+
+
+// Row
+| sum_(i=1)^n i^3=((n(n+1))/2)^2
+a|
+// $sum_(i=1)^n i^3=((n(n+1))/2)^2$
+|===

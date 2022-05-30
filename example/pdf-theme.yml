@@ -1,0 +1,6 @@
+extends: default
+base:
+  font-color: #000
+image:
+  caption-side: bottom
+  caption-align: center

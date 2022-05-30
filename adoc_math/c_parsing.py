@@ -127,22 +127,28 @@ class Parsing(b_reading.Reading):
         tf: plib.Path,  # for error message
         lineno: Lineno,  # for error message
     ) -> Opts:
-        lang, alignment, max_lines = None, None, None
+        lang, scale, positioning, vertical_align_offset, alignment, max_lines = [
+            None
+        ] * 6
         for opt_raw in opts_raw.split(","):
+            opt_raw = opt_raw.strip()  # handle no options
             if opt_raw == "":
-                continue  # handle no options
+                continue
             split = opt_raw.split("=")
             if len(split) == 1:
                 # simple case
-                # try:
-                #     alignment = Alignment(split[0].upper())
-                # except ValueError:
                 try:
-                    lang = Lang(split[0].upper())
+                    positioning = Positioning(split[0].upper())
                 except ValueError:
-                    raise AdocMathException(
-                        f"Invalid option on {tf}#L{lineno}: {opt_raw!r}"
-                    )
+                    try:
+                        lang = Lang(split[0].upper())
+                    except ValueError:
+                        try:
+                            alignment = Alignment(split[0].upper())
+                        except ValueError:
+                            raise AdocMathException(
+                                f"Invalid option on {tf}#L{lineno}: {opt_raw!r}"
+                            )
 
             elif len(split) == 2:
                 # assignment case
@@ -150,7 +156,13 @@ class Parsing(b_reading.Reading):
                     split[0].strip(),
                     split[1].strip(),
                 )
-                if key == "max_lines":
+                if key == "scale":
+                    scale = Scale(int(rshave(val, "%")))
+                elif key == "vertical_align_offset":
+                    vertical_align_offset = VerticalAlignOffset(
+                        float(rshave(val, "ex"))
+                    )
+                elif key == "max_lines":
                     max_lines = MaxLines(int(val))
                 else:
                     raise AdocMathException(f"Invalid option: {opt_raw!r}")
@@ -158,7 +170,11 @@ class Parsing(b_reading.Reading):
                 raise AdocMathException(f"Invalid option: {opt_raw!r}")
         ret = Opts(
             lang=lang or s.default_lang,
-            # alignment=alignment or s.default_alignment,,
+            scale=scale or s.default_scale,
+            positioning=positioning or s.default_positioning,
+            vertical_align_offset=vertical_align_offset
+            or s.default_vertical_align_offset,
+            alignment=alignment or s.default_alignment,
             max_lines=max_lines or s.default_max_lines,
         )
         return ret

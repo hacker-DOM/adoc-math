@@ -1,14 +1,14 @@
 from ._common import *
-from . import e_svg_handling
+from . import e_svg_transforming
 
 logger = get_logger(__file__, LOGGING_LEVEL)
 
 
-class Processing(e_svg_handling.SvgHandling):
+class Processing(e_svg_transforming.SvgTransforming):
     def process(s):
         for cell in s.cells:
             stdout = s.call_mathjax_wrapper(cell)
-            xml_str = s.handle_svg(XmlStr(stdout))
+            xml_str = s.transform_svg(cell, XmlStr(stdout))
             file_name = s.get_file_name(cell)
             file_path = s.write_svg_file(file_name, xml_str)
             s.handle_source_file(cell, file_path)
@@ -36,16 +36,26 @@ class Processing(e_svg_handling.SvgHandling):
         )
         # endregion
 
-        # region import part
-        import_part = plib.PosixPath(os.path.relpath(file_path, start=s.images_dir))
-        # endregion
-
-        # region insert image macro
+        # region macro name part
         if isinstance(cell, BlockCell):
             macro_name = "image::"
         else:
             macro_name = "image:"
-        macro = f"{macro_name}{import_part}[]{os.linesep}"
+        # endregion
+
+        # region import part
+        import_part = plib.PosixPath(os.path.relpath(file_path, start=s.images_dir))
+        # endregion
+
+        # region image options
+        if isinstance(cell, BlockCell):
+            image_options = f"align={cell.opts.alignment.lower()}"
+        else:
+            image_options = ""
+
+        # region insert image macro
+        macro = f"{macro_name}{import_part}[{image_options}]{os.linesep}"
+
         # last line might not have os.linesep...
         file_contents = s.file_contents_proposed[cell.path]
         if file_contents[-1][-1] != os.linesep:
@@ -145,7 +155,7 @@ class Processing(e_svg_handling.SvgHandling):
         ]
         try:
             stdout, _ = run_cmd(
-                Command(" ".join(cmd_args)),
+                Command(join_with(cmd_args, " ")),
                 stdin=cell.content.encode(),
                 raise_on_error=True,
             )

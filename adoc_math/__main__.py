@@ -20,7 +20,9 @@ def parse_args():
     )
 
     p.add_argument(
-        "target_files", help="List of files to run `adoc-math` on.", **list_of_files
+        "target_files",
+        help="List of files to run `adoc-math` on. Inline cells (lines such as `$x+y$ tex`) or block cells (lines such as [`$$ amath\n`, `x+y\n`, `$$\n`]) will be read for contents, parsed for options, passed into MathJax@3, and (optionally) the svg transformed. The svg will then be saved to the output directory, and the source file modified: the cell will be commented out and an image macro with a reference to the svg will be inserted. 🤟🚀",
+        **list_of_files,
     )
 
     p.add_argument(
@@ -35,17 +37,38 @@ def parse_args():
         **list_of_files,
     )
 
-    # p.add_argument("--default-alignment", help="Default alignment")
-
     p.add_argument(
         "--default-lang",
-        help="Default language. Can be TEX (LaTeX) or AMATH (AsciiMath).",
+        help="Default language. Can be TEX (LaTeX) or AMATH (AsciiMath). Default: amath.",
+        choices=("tex", "amath"),
+    )
+
+    p.add_argument(
+        "--default-scale",
+        help="Default scale. This option scales your svgs width and height (in `ex` units). Note that Asciidoctor does not provide a good API for scaling svgs - you can specify a fixed width, but cannot scale by a factor. By default, the math is a little bit too big (a little larger than surrounding text) - at least on the default Asciidoc theme. As such, the default is 90%%. Default: 90%%.",
+    )
+
+    p.add_argument(
+        "--default-positioning",
+        help='The raw svg, placed in the asciidoc document, usually gets rendered slightly above the line base (the baseline that characters which don\'t have lower parts (like "y" or "j" are above). Fortunately, Mathjax provides a "style" attribute in the svg (in the form of CSS), which is normally used by browsers to vertically align the math characters. I figured out a way to read this, process it, and achieve a similar effect in pdfs. The idea is that for simple symbols, like $x$, you usually want to position it. However, when you have a fraction ($\frac{a}{b}$), it usually looks better unpositioned. This option controls the default positioning for cells. Default: position.',
+        choices=("position", "dont_position"),
+    )
+
+    p.add_argument(
+        "--default-vertical-align-offset",
+        help="This option allows to specify an offset to the `vertical-align` style explained above. For example, capital letter (`P`) seem to get positioned nicely, but lowercase letters (`p`) are not; I found that `vertical_align_offset = -0.4ex` works well for singleton lowercase characters. Note that this option won't have any effect if `positioning` is set to `dont_position`. Default: 0.0ex.",
+    )
+
+    p.add_argument(
+        "--default-alignment",
+        help="This option controls the default *horizontal* alignment of *block* cells. In particuar, it uses Asciidoc's image:...[align=(left|center|right)] API. Default: center.",
     )
 
     p.add_argument(
         "--default-max-lines",
         help="To ensure that you don't forget to close a cell, there is an option to set the maximum number of lines that a cell can have. This option sets the default value, but it can be overridden: as `$$max_lines=10\nx\n$$`. Max lines option (either through CLI or through a cell attribute) has no effect on inline cells, since they span just one line. Default: 6.",
     )
+
     p.add_argument(
         "--filename-snippet-length",
         type=int,
@@ -76,9 +99,9 @@ def main():
     args = parse_args()
 
     # The idea here is that the arguments specified in `parse_args` will have value
-    # None if they are not specified by the user. If we just use something like `i_impl.AdocMath(default_alignment=args.default_alignment`
+    # None if they are not specified by the user. If we just use something like `i_impl.AdocMath(default_positioning=args.default_positioning`
     # etc (for all other arguments), then we'll lose the default values
-    # as specified in AdocMath (e.g. default_alignment = Alignment.ALIGN)
+    # as specified in AdocMath (e.g. default_positioning = Positioning.POSITION)
     # So instead, let's just filter out those that are None
     # (more specifically those that are falsy), and pass in the rest
     kwargs = {key: val for key, val in vars(args).items() if val}

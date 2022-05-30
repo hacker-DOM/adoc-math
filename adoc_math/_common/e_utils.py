@@ -100,3 +100,19 @@ def change_cwd(path: Union[plib.Path, str]):
         yield
     finally:
         os.chdir(orig_cwd)
+
+
+def lshave(string: str, sub: str) -> str:
+    if string.startswith(sub):
+        return string[len(sub) :]
+    else:
+        return string
+
+
+def rshave(string, sub: str) -> str:
+    if not isinstance(string, str):
+        string = str(string)
+    if string.endswith(sub):
+        return string[: len(string) - len(sub)]
+    else:
+        return string

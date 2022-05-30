@@ -18,9 +18,13 @@ class AdocMath(g_output.Output):
         include: OptionalListOfPaths = None,
         # endregion
         # region default cell options
-        # todo:
-        # default_alignment: Union[Alignment, str] = Alignment.ALIGN,
         default_lang: Union[Lang, str] = Lang.AMATH,
+        default_scale: Union[Scale, str] = Scale(90),
+        default_positioning: Union[Positioning, str] = Positioning.POSITION,
+        default_vertical_align_offset: Union[
+            VerticalAlignOffset, str
+        ] = VerticalAlignOffset(0),
+        default_alignment: Union[Alignment, str] = Alignment.CENTER,
         default_max_lines: Union[MaxLines, int] = MaxLines(6),
         # endregion
         # region other options
@@ -63,12 +67,14 @@ class AdocMath(g_output.Output):
         # endregion
 
         # region default cell options
-        # typecast Alignment | str to Alignment
-        # s.default_alignment = Alignment(
-        #     default_alignment.upper()
-        # )  # this will even if it is already a Alignment
-        # same here
+        # typecast Lang | str to Lang
         s.default_lang = Lang(default_lang.upper())
+        s.default_scale = Scale(int(rshave(default_scale, "%")))
+        s.default_positioning = Positioning(default_positioning.upper())
+        s.default_vertical_align_offset = VerticalAlignOffset(
+            float(rshave(default_vertical_align_offset, "ex"))
+        )
+        s.default_alignment = Alignment(default_alignment.upper())
         s.default_max_lines = MaxLines(default_max_lines)
         # endregion
 

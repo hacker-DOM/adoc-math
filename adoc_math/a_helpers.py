@@ -9,8 +9,11 @@ class Helpers:
     # endregion
 
     # region default cell options
-    # default_alignment: Alignment
     default_lang: Lang
+    default_scale: Scale
+    default_positioning: Positioning
+    default_vertical_align_offset: VerticalAlignOffset
+    default_alignment: Alignment
     default_max_lines: MaxLines
     # endregion
 

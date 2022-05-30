@@ -9,6 +9,9 @@ README = "README.adoc"
 AUTHOR = "Dominik Teiml"
 PYTHON_REQUIRES = ">=3.7"
 DESCRIPTION = """Use MathJax (Latex or AsciiMath) in your AsciiDoc projects!"""
+# text/asciidoc is not supported
+# Ref: https://packaging.python.org/en/latest/specifications/core-metadata/#description-content-type
+LONG_DESCRIPTION_CONTENT_TYPE = "text/plain"
 
 
 extras_require = dict(
@@ -46,4 +49,5 @@ setuptools.setup(
     extras_require=extras_require,
     python_requires=PYTHON_REQUIRES,
     long_description=long_description,
+    long_description_content_type=LONG_DESCRIPTION_CONTENT_TYPE,
 )

@@ -3,7 +3,7 @@ import setuptools
 
 LICENSE = "ISC"
 DIR = "adoc_math"
-VERSION = "1.0.4"
+VERSION = "1.0.5"
 NAME = "adoc-math"
 SETUP_DIR = "_setup"
 README = "README.adoc"

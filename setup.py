@@ -9,6 +9,7 @@ README = "README.adoc"
 AUTHOR = "Dominik Teiml"
 PYTHON_REQUIRES = ">=3.7"
 INCLUDE_PACKAGE_DATA = True
+HOMEPAGE = "https://github.com/hacker-dom/adoc-math"
 DESCRIPTION = """Use MathJax (Latex or AsciiMath) in your AsciiDoc projects!"""
 # text/asciidoc is not supported
 # Ref: https://packaging.python.org/en/latest/specifications/core-metadata/#description-content-type
@@ -51,6 +52,7 @@ setuptools.setup(
     version=VERSION,
     license=LICENSE,
     packages=packages,
+    homepage=HOMEPAGE,
     description=DESCRIPTION,
     entry_points=entry_points,
     package_data=package_data,

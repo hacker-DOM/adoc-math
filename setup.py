@@ -2,17 +2,17 @@ import setuptools
 
 LICENSE = "ISC"
 DIR = "adoc_math"
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 NAME = "adoc-math"
 SETUP_DIR = "_setup"
 README = "README.adoc"
 AUTHOR = "Dominik Teiml"
 PYTHON_REQUIRES = ">=3.7"
+INCLUDE_PACKAGE_DATA = True
 DESCRIPTION = """Use MathJax (Latex or AsciiMath) in your AsciiDoc projects!"""
 # text/asciidoc is not supported
 # Ref: https://packaging.python.org/en/latest/specifications/core-metadata/#description-content-type
 LONG_DESCRIPTION_CONTENT_TYPE = "text/plain"
-
 
 extras_require = dict(
     tests=[
@@ -25,6 +25,13 @@ packages = [
     for some_dir in setuptools.find_namespace_packages(DIR)
     if "tests" not in some_dir.split(".")
 ] + [DIR]
+
+package_data = dict(
+    NAME=[
+        f"./{DIR}/**/*.py",
+        f"./{DIR}/**/*.js",
+    ]
+)
 
 entry_points = dict(
     console_scripts=[
@@ -46,8 +53,10 @@ setuptools.setup(
     packages=packages,
     description=DESCRIPTION,
     entry_points=entry_points,
+    package_data=package_data,
     extras_require=extras_require,
     python_requires=PYTHON_REQUIRES,
     long_description=long_description,
+    include_package_data=INCLUDE_PACKAGE_DATA,
     long_description_content_type=LONG_DESCRIPTION_CONTENT_TYPE,
 )

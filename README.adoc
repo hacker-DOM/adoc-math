@@ -18,6 +18,7 @@
 :adoctor-math: https://github.com/asciidoctor/asciidoctor-mathematical[asciidoctor-mathematical]
 :amath: http://asciimath.org[AsciiMath]
 
+Use MathJax (Latex or AsciiMath) in your AsciiDoc projects 🤟🚀
 
 toc::[]
 

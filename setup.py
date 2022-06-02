@@ -1,9 +1,8 @@
-from gzip import READ
 import setuptools
 
 LICENSE = "ISC"
 DIR = "adoc_math"
-VERSION = "1.0.7"
+VERSION = "1.0.8"
 NAME = "adoc-math"
 SETUP_DIR = "_setup"
 README = "README.adoc"

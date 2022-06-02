@@ -1,6 +1,6 @@
 // Header
 # Example
-:pdf-page-size: 9in x 17in
+:pdf-page-size: 9in x 17.5in
 :pdf-theme: pdf-theme.yml
 :stem:
 
@@ -181,10 +181,4 @@ $$ amath, max_lines = 8
 $$
 a|
 * If you forget to close a cell, it can be difficult to find the culprit. To prevent this, block cells have a `max_lines` parameter (by default 6). You can override this with `max_lines=X`.
-
-
-// Row
-| sum_(i=1)^n i^3=((n(n+1))/2)^2
-a|
-// $sum_(i=1)^n i^3=((n(n+1))/2)^2$
 |===

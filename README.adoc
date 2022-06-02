@@ -52,8 +52,10 @@ Putting LaTeX equations in other places than a TeX document is not so easy. Ther
 
 * {mathjax}
 ** It uses native browser fonts and a lot of Css to replicate {latex} in the browser.
+** It also has an svg output option!
 * {katex}
 ** Similar to {mathjax}, built by Khan Academy.
+** Does not have svg output.
 
 ### 🔍 STEM
 STEM stands for Science, Technology, Engineering, Mathematics, basicaly {latex}. There are two sections in the {adoc} documentation on STEM:
@@ -61,14 +63,14 @@ STEM stands for Science, Technology, Engineering, Mathematics, basicaly {latex}.
 * {adoc-stem}
 * {adoctor-pdf-stem}
 
-TLDR:
+The TLDR is:
 
-* In {adoctor} (i.e. Html output), you can include math with `stem:[x+y]`. In the browser, {mathjax} is used to render the math, and frankly, it looks beautiful.
+* In {adoctor} (i.e. Html output), you can include math with pass:n[``stem:[ x+y``]``]``. In the browser, {mathjax} is used to render the math, and frankly, it looks beautiful.
 * Since {mathjax} uses browser fonts and Css, it doesn't work in Pdfs. There is an official {adoctor-math} package that provides this support. However, it is extremely quirky, and the ouput doesn't look very good (see a comparison of {adoc-math} and {adoctor-math} in the {example})
 ** Some more references:
 *** https://github.com/asciidoctor/asciidoctor-mathematical/issues/45
 
-### 🔍 Architecture
+### 🔍 adoc-math
 
 That's where `adoc-math` comes in! I decided for:
 
@@ -105,6 +107,14 @@ For more examples, see the {example}.
 > Why isn't `adoc-math` written in Ruby?
 
 I don't speak Ruby 😞 If you would like to translate this library to Ruby, or at least an AsciiDoc macro that can get replaced by an image, so we cant get rid of the extra metacompilation step, I'd be more than happy to help!
+
+> Why aren't inline cells avaiable "in line", such as "Let $x$ be a integer."?
+
+This decision was chosen very early during development. It makes the parsing logic easier, and reduces the change that a paragraph containing two dollar signs will get replaced by LaTeX. In theory, it would be possible to add this; however, the output will still have at least one linebreak, since we want to comment out the source math. We would probably be better off just making an Asciidoc macro (`stem[]`, `m[]`, or something similar), but we need a Ruby speaker!
+
+> What are `ex` units?
+
+An ex unit is equal to the font size (height) of the lowercase `x` character. So it's roughly one half of a line? It's used in Mathjax's svgs (as the `width`, `height` and `vertical-align`) and in `adoc-math` to adjust the `vertical-align`.
 
 > What about Windows?
 

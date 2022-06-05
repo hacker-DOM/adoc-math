@@ -1,6 +1,6 @@
 // Header
 # Example
-:pdf-page-size: 9in x 17in
+:pdf-page-size: 9in x 17.5in
 :pdf-theme: pdf-theme.yml
 :stem:
 

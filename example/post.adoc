@@ -1,6 +1,6 @@
 // Header
 # Example
-:pdf-page-size: 9in x 17in
+:pdf-page-size: 9in x 17.5in
 :pdf-theme: pdf-theme.yml
 :stem:
 
@@ -20,19 +20,24 @@ The purpose of this example is to compare {adoc-math} and {adoctor-math}, and to
 We are about to discuss the famous <<cauchy-schwarz-ineq>>.
 
 *Theorem {counter:counter-thms} (Cauchy-Schwarz Inequality)* Let
-$n$ vertical_align_offset = -0.4ex
+// $n$ vertical_align_offset = -0.4ex
+image:imgs/adoc-math/a_inline_amath_n_f5d15920.svg[]
 be a non-negative integer, and let
-$a_0, a_1, ..., a_n,$ vertical_align_offset = -0.7ex
-$b_0, b_1, ..., b_n in bbb "R"$ 
+// $a_0, a_1, ..., a_n,$ vertical_align_offset = -0.7ex
+image:imgs/adoc-math/a_inline_amath_a_0a_7458f93c.svg[]
+// $b_0, b_1, ..., b_n in bbb "R"$ 
+image:imgs/adoc-math/a_inline_amath_b_0b_986ceb00.svg[]
 where
-$bbb "R"$
+// $bbb "R"$
+image:imgs/adoc-math/a_inline_amath_bbbR_34f68880.svg[]
 is the set of real numbers. It follows that:
 
 [#cauchy-schwarz-ineq]
 .Cauchy-Schwarz Inequality
-$$
-(a_0^2 + a_1^2 + ... + a_n^2)(b_0^2 + b_1^2 + ... + b_n^2) ≥ (a_0b_0 + a_1b_1 + ... + a_nb_n)^2
-$$
+// $$
+// (a_0^2 + a_1^2 + ... + a_n^2)(b_0^2 + b_1^2 + ... + b_n^2) ≥ (a_0b_0 + a_1b_1 + ... + a_nb_n)^2
+// $$
+image::imgs/adoc-math/b_block_amath_(a_0_6354bc50.svg[align=center]
 
 ### `asciidoctor-mathematical`
 
@@ -66,7 +71,8 @@ a|
 ----
 a|
 [.text-center]
-$a/b$
+// $a/b$
+image:imgs/adoc-math/a_inline_amath_ab_dd460eca.svg[]
 a| 
 * The default language is {amath}.
 * Inline cells start with a `$`, and end with a `$`.
@@ -79,7 +85,8 @@ a|
 ----
 a|
 [.text-center]
-$a/b$ amath
+// $a/b$ amath
+image:imgs/adoc-math/a_inline_amath_ab_bbcbf77a.svg[]
 .2+a|
 * Options come after the last `$` in inline cells.
 * You can override the default language with
@@ -99,7 +106,8 @@ a|
 ----
 a|
 [.text-center]
-$\dfrac{a}{b}$ tex
+// $\dfrac{a}{b}$ tex
+image:imgs/adoc-math/a_inline_tex_dfra_c0bb0f86.svg[]
 
 // Row
 a|
@@ -109,7 +117,8 @@ a|
 ----
 a|
 [.text-center]
-$a/b$ scale = 150%
+// $a/b$ scale = 150%
+image:imgs/adoc-math/a_inline_amath_ab_3888804f.svg[]
 a|
 * You can scale your math.
 
@@ -121,7 +130,8 @@ a|
 ----
 a|
 [.text-center]
-$a/b$ vertical_align_offset = 1ex
+// $a/b$ vertical_align_offset = 1ex
+image:imgs/adoc-math/a_inline_amath_ab_db32d819.svg[]
 a|
 * You can move your math up or down.
 
@@ -134,9 +144,10 @@ sum_(i=1)^n i^3=((n(n+1))/2)^2
 {empty}$$
 ----
 a|
-$$ amath
-sum_(i=1)^n i^3=((n(n+1))/2)^2
-$$
+// $$ amath
+// sum_(i=1)^n i^3=((n(n+1))/2)^2
+// $$
+image::imgs/adoc-math/b_block_amath_sum__57ebec07.svg[align=center]
 a|
 * Block cells are written between lines of `$$`; the options will be on the first line.
 
@@ -149,9 +160,10 @@ a^2 + b^2 = c^2
 {empty}$$
 ----
 a|
-$$ amath, right
-a^2 + b^2 = c^2
-$$
+// $$ amath, right
+// a^2 + b^2 = c^2
+// $$
+image::imgs/adoc-math/b_block_amath_a2+b_c62fc84c.svg[align=right]
 a|
 * You can horizontally align block cells.
 
@@ -170,15 +182,16 @@ a|
 {empty}$$
 ----
 a|
-$$ amath, max_lines = 8
-1 +
-2 +
-3 +
-4 +
-5 +
-6 =
-21
-$$
+// $$ amath, max_lines = 8
+// 1 +
+// 2 +
+// 3 +
+// 4 +
+// 5 +
+// 6 =
+// 21
+// $$
+image::imgs/adoc-math/b_block_amath_1+2+_9f90f2f1.svg[align=center]
 a|
 * If you forget to close a cell, it can be difficult to find the culprit. To prevent this, block cells have a `max_lines` parameter (by default 6). You can override this with `max_lines=X`.
 

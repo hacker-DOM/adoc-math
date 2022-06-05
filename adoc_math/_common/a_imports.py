@@ -1,3 +1,4 @@
+# pyright: reportUnusedImport=false
 import enum
 import os
 import subprocess
@@ -25,9 +26,7 @@ from typing import (
     TypeVar,
     Optional,
 )
-import logging
 import inspect
 import pprint
-import xml.dom.minidom
 import random
 import contextlib

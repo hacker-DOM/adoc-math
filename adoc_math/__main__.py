@@ -4,7 +4,7 @@ from . import i_impl
 
 # Version is dynamically imported by `pdm` (our build tool)
 # Afaik, this does _not_ work for `name`` and `description``
-__version__ = "1.0.7"
+__version__ = "1.0.8"
 NAME = "adoc-math"
 DESCRIPTION = """Use MathJax (Latex or AsciiMath) in your AsciiDoc projects!"""
 

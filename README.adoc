@@ -156,7 +156,7 @@ image::./assets/readme-faq-aligned-bullet-point.png[]
 
 > Adding math in a 4th-order bullet point causes weird rendering.
 
-In AsciiDoc, literal blocks can be delimited (created) with `----` or `****`. So if you need to have something like:
+In AsciiDoc, literal blocks can be delimited (created) with `----` or pass:[`****`]. So if you need to have something like:
 
 ----
 * one
@@ -166,9 +166,9 @@ In AsciiDoc, literal blocks can be delimited (created) with `----` or `****`. So
 $1 + 1 = 4$
 ----
 
-AsciiDoc will recognize the `****` as an opening of a literal block. 
+AsciiDoc will recognize the pass:[`****`] as an opening of a literal block. 
 
-The solution to this is to add something after the `****`. This uses the builtin `{empty}`:
+The solution to this is to add something after the pass:[`****`]. This uses the builtin pass:q[`{empty}`]:
 
 ----
 * one

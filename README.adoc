@@ -145,3 +145,35 @@ MathJax probably cannot be found. Try running `adoc-math-setup`.
 It seems that {amath} interprets fractions in `displaystyle` rather than `textstyle` (`\dfrac{}{}` rather than `\tfrac{}{}` or even `\frac{}{}`, see https://tex.stackexchange.com/a/135395/31626[StackExchange]).
 
 I haven't found a good solution to this yet. If you have any ideas, please let me know! Note that if you have a singleton fraction (`$a/b$ amath`) you can scale it down with `$a/b$ amath, scale = 60%` (or just use `tex`).
+
+> Math in bullet points causes my text not to be aligned with the bullet point.
+
+image::./assets/readme-faq-unaligned-bullet-point.png[]
+
+Try playing around with the positioning and vertical align offset. In this example, just adding `dont_position` to this cell's attributes fixes the issue:
+
+image::./assets/readme-faq-aligned-bullet-point.png[]
+
+> Adding math in a 4th-order bullet point causes weird rendering.
+
+In AsciiDoc, literal blocks can be delimited (created) with `----` or `****`. So if you need to have something like:
+
+----
+* one
+** two
+*** three
+****
+$1 + 1 = 4$
+----
+
+AsciiDoc will recognize the `****` as an opening of a literal block. 
+
+The solution to this is to add something after the `****`. This uses the builtin `{empty}`:
+
+----
+* one
+** two
+*** three
+**** {empty}
+$1 + 1 = 4$
+----

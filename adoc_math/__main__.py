@@ -2,14 +2,19 @@ import argparse as argp
 
 from . import i_impl
 
-NAME = "adoc-math"  # Cannot import from setup.py, src
+# Version is dynamically imported by `pdm` (our build tool)
+# Afaik, this does _not_ work for `name`` and `description``
+__version__ = "1.0.9"
+NAME = "adoc-math"
 DESCRIPTION = """Use MathJax (Latex or AsciiMath) in your AsciiDoc projects!"""
 
 list_of_files = dict(
     metavar="files",
     action="store",
     nargs="*",
-    default=list(),
+    # default=list() cannot go here,
+    # because then the list would be the same
+    # for all options.
 )
 
 
@@ -20,21 +25,31 @@ def parse_args():
     )
 
     p.add_argument(
+        "--version",
+        help="Displays the current version.",
+        version=__version__,
+        action="version",
+    )
+
+    p.add_argument(
         "target_files",
         help="List of files to run `adoc-math` on. Inline cells (lines such as `$x+y$ tex`) or block cells (line ranges such as [`$$ amath\n`, `x+y\n`, `$$\n`]) will be read for contents, parsed for options, passed into MathJax@3, and (optionally) the svg transformed. The svg will then be saved to the output directory, and the source file modified: the cell will be commented out and an image macro with a reference to the svg will be inserted. 🤟🚀",
         **list_of_files,
+        default=list(),
     )
 
     p.add_argument(
         "--exclude",
         help="List of files to be excluded; overrides `target_files`.",
         **list_of_files,
+        default=list(),
     )
 
     p.add_argument(
         "--include",
         help="List of files to be included; overrides `target_files` and `--exclude`.",
         **list_of_files,
+        default=list(),
     )
 
     p.add_argument(
@@ -110,5 +125,5 @@ def main():
     adoc_math.run()
 
 
-if __name__ == "__main__":
+if NAME == "__main__":
     main()
